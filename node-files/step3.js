@@ -38,18 +38,20 @@ async function webCat(url, outputPath) {
   }
 }
 
-let path;
+let paths;
 let outputPath;
 
 if (process.argv[2] === "--out") {
   outputPath = process.argv[3];
-  path = process.argv[4];
+  paths = process.argv.slice(4);
 } else {
-  path = process.argv[2];
+  paths = process.argv.slice(2);
 }
 
-if (path.slice(0, 4) === "http") {
-  webCat(path, outputPath);
-} else {
-  cat(path, outputPath);
+for (let path of paths) {
+  if (path.slice(0, 4) === "http") {
+    webCat(path, outputPath);
+  } else {
+    cat(path, outputPath);
+  }
 }
